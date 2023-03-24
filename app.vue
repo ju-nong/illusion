@@ -37,7 +37,7 @@ onClickOutside($modal, (event) => {
 const config = reactive({
     icon: "❤", // 표시할 아이콘
     diameter: 100, // 지름
-    count: 50, // 개수
+    count: 100, // 개수
     opacity: 1, // 투명도
 });
 
