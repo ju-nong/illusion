@@ -5,12 +5,20 @@
                 v-for="(_, index) in temp"
                 :key="index"
                 class="text-center absolute triangle text-4xl"
-                :style="`left: ${setLeft(index)}px; top:${setTop(index)}px; `"
+                :style="`left: ${setLeft(index)}px; top:${setTop(
+                    index,
+                )}px; opacity: ${config.opacity}`"
             >
                 {{ config.icon }}
             </span>
         </div>
-        <ShareModal v-if="modalShow" ref="$modal" />
+        <ShareModal
+            v-if="modalShow"
+            :config="config"
+            ref="$modal"
+            @update="updateConfig"
+            @close="modalShow = false"
+        />
     </div>
 </template>
 
@@ -29,7 +37,8 @@ onClickOutside($modal, (event) => {
 const config = reactive({
     icon: "❤", // 표시할 아이콘
     diameter: 100, // 지름
-    count: 50, // 아이콘 개수
+    count: 50, // 개수
+    opacity: 1, // 투명도
 });
 
 // 각도
@@ -42,6 +51,9 @@ const setLeft = (idx) =>
     Math.ceil(config.diameter * Math.cos(idx * angle.value));
 const setTop = (idx) =>
     Math.ceil(config.diameter * Math.sin(idx * angle.value));
+
+// const updateConfig = (newConfig) => Object.assign(config, newConfig);
+const updateConfig = (newConfig) => (config[newConfig.key] = newConfig.value);
 </script>
 
 <style lang="scss">
