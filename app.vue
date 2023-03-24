@@ -1,6 +1,6 @@
 <template>
     <div class="w-[100vw] h-[100vh] flex items-center justify-center">
-        <div class="relative" @click="modalShow = true">
+        <div class="relative cursor-pointer" @click="modalShow = true">
             <span
                 v-for="(_, index) in temp"
                 :key="index"

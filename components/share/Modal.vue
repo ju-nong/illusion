@@ -1,6 +1,8 @@
 <template>
     <div
         class="modal-container p-4 fixed z-[100] bg-white rounded shadow-lg cursor-pointer flex flex-col z-[20]"
+        :style="style"
+        ref="$modal"
     >
         <p class="text-2xl text-bold font-black pb-2">Illusion Settings</p>
         <label for="icon">
@@ -54,10 +56,16 @@
 </template>
 
 <script setup>
+import { useDraggable } from "@vueuse/core";
+
 const props = defineProps({
     config: Object,
 });
 
+const $modal = ref();
+const { x, y, style } = useDraggable($modal, {
+    initialValue: { x: 40, y: 40 },
+});
 const cloneConfig = reactive({ ...props.config });
 
 const emit = defineEmits(["update", "close"]);
