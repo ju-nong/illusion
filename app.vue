@@ -2,7 +2,7 @@
     <div class="w-[100vw] h-[100vh] flex items-center justify-center">
         <div class="relative cursor-pointer" @click="modalShow = true">
             <span
-                v-for="(_, index) in temp"
+                v-for="index in config.count"
                 :key="index"
                 class="text-center absolute triangle text-4xl"
                 :style="`left: ${setLeft(index)}px; top:${setTop(
@@ -23,7 +23,6 @@
 </template>
 
 <script setup>
-import { range } from "@toss/utils";
 import { onClickOutside } from "@vueuse/core";
 
 const $modal = ref();
@@ -44,16 +43,19 @@ const config = reactive({
 // 각도
 const angle = computed(() => (Math.PI * 2) / config.count);
 
-// 아이콘 개수만큼 반복할 배열
-const temp = computed(() => range(config.count));
-
 const setLeft = (idx) =>
     Math.ceil(config.diameter * Math.cos(idx * angle.value));
 const setTop = (idx) =>
     Math.ceil(config.diameter * Math.sin(idx * angle.value));
 
 // const updateConfig = (newConfig) => Object.assign(config, newConfig);
-const updateConfig = (newConfig) => (config[newConfig.key] = newConfig.value);
+const updateConfig = ({ key, value }) => {
+    if (key === "count") {
+        value = Number(value);
+    }
+
+    config[key] = value;
+};
 </script>
 
 <style lang="scss">
